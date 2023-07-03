@@ -1,0 +1,14 @@
+<app-navbar></app-navbar>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4 pb-4" *ngFor="let data of appoinmentData">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title"> {{data.timing}} </h5>
+                    <p>{{data.patient?.name}} </p>
+                    <p>{{data.patient?.contactNumber}} </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

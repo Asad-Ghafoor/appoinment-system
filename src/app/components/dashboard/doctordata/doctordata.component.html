@@ -1,0 +1,203 @@
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h1 class="fw-bold text-success"> Doctors</h1>
+
+        </div>
+        <div class="col-6">
+            <button class="btn btn-info add" type="button" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">Add</button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container formbg">
+                                <form [formGroup]="registerform" (ngSubmit)="registerUser()">
+                                    <div>
+                                        <label for="get-image">
+                                            <img class="avatar" [src]="imageSrc" alt=""> <input type="file"
+                                                id="get-image" hidden name="profile" (change)="onFileChange($event)">
+                                        </label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mt-2">
+                                            <div class="form-group">
+                                                <label for="Name">Full Name</label>
+                                                <input type="text" class="form-control" formControlName="name">
+                                                <small style="color: red;"
+                                                    *ngIf="name && name.invalid && name.touched ">Your Name is not
+                                                    valid</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mt-2">
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <input type="email" class="form-control" formControlName="email">
+                                                <small style="color: red;"
+                                                    *ngIf="email && email.invalid && email.touched ">Your Name is not
+                                                    valid</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mt-2">
+                                            <div class="form-group">
+                                                <label for="password">Password</label>
+                                                <input type="password" class="form-control" formControlName="password">
+                                                <small style="color: red;"
+                                                    *ngIf="password && password.invalid && password.touched ">Your Name
+                                                    is not
+                                                    valid</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mt-2">
+                                            <div class="form-group">
+                                                <label for="password">Confirm Password</label>
+                                                <input type="password" class="form-control" formControlName="cpassword">
+                                                <small style="color: red;"
+                                                    *ngIf="cpassword && cpassword.invalid && cpassword.touched ">Your
+                                                    Name is not
+                                                    valid</small>
+                                                <small style="color: red;" *ngIf="!isPasswordMatch">
+                                                    password are not matched</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mt-2">
+                                            <div class="form-group">
+                                                <label for="contactNumber">Contact Number</label>
+                                                <input type="Number" class="form-control"
+                                                    formControlName="contactNumber">
+                                                <small style="color: red;"
+                                                    *ngIf="contactNumber && contactNumber.invalid && contactNumber.touched ">Your
+                                                    Name is not
+                                                    valid</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mt-2">
+                                            <div class="form-group">
+                                                <label for="email">Status</label>
+                                                <select class="form-select" aria-label="Default select example"
+                                                    formControlName="userType">
+                                                    <option selected value="Doctor">Active</option>
+                                                    <option value="Doctor">Inactive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <button type="submit" class="mt-3 w-100 btn btn-lg btn-primary">Register</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Update</th>
+                    <th scope="col"> Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of doctors;index as i">
+                    <td> {{i+1}} </td>
+                    <th><a [href]="url + data.image"><img
+                                [src]="(data.image != 'no image' ? url + data.image : 'assets/avatar.png')" height="60"
+                                width="60" alt=""></a>
+                    </th>
+                    <td> {{data.name}} </td>
+                    <td> {{data.email}} </td>
+                    <td> {{data.contactNumber}} </td>
+                    <td> {{data.status? 'Active':'Inactive'}} </td>
+                    <td><button class="btn btn-success" type="button" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal1" (click)="update(data)">Update</button></td>
+                    <td><button class="btn btn-danger" (click)="delete(data._id)">Delete</button></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Doctors</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form [formGroup]="updateForm" (ngSubmit)="updateFormSubmit(Id)">
+                        <div>
+                            <label for="get-image">
+                                <img class="avatar" [src]="imageSrc" alt=""> <input type="file" id="get-image" hidden
+                                    name="profile" (change)="onFileChange($event)" formControlName="image">
+                            </label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-2">
+                                <div class="form-group">
+                                    <label for="Name">Full Name</label>
+                                    <input type="text" class="form-control" formControlName="name">
+                                    <small style="color: red;" *ngIf="name && name.invalid && name.touched ">Your
+                                        Name is not
+                                        valid</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" formControlName="email">
+                                    <small style="color: red;" *ngIf="email && email.invalid && email.touched ">Your
+                                        Name is not
+                                        valid</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <div class="form-group">
+                                    <label for="contactNumber">Contact Number</label>
+                                    <input type="Number" class="form-control" formControlName="contactNumber">
+                                    <small style="color: red;"
+                                        *ngIf="contactNumber && contactNumber.invalid && contactNumber.touched ">Your
+                                        Name is not
+                                        valid</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <div class="form-group">
+                                    <label for="email">Status</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        formControlName="userType">
+                                        <option selected value="Doctor">Active</option>
+                                        <option value="Doctor">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <button type="submit" class="mt-3 w-100 btn btn-lg btn-primary">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

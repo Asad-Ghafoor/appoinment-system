@@ -1,0 +1,16 @@
+<app-navbar></app-navbar>
+
+<div class="container p-5">
+    <div class="row">
+        <div class="col-md-4 mb-5" *ngFor="let data of appoinmetsData">
+            <div class="card" style="width: 18rem;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title"> {{data.timing}} </h5>
+                    <p>{{data.doctor?.name}} </p>
+                    <p>{{data.doctor?.contactNumber}} </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
